@@ -1,0 +1,79 @@
+/* styles.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #00c6ff, #0072ff);  /* Ski-themed energetic colors */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  flex-direction: column; /* Keep title centered */
+}
+
+h1 {
+  color: white;
+  font-size: 2.5rem; /* Increase font size */
+  margin-bottom: 20px;
+  text-align: center; /* Move title to the left */
+  /* width: auto;  Allow title to be longer than the input box */
+  max-width: 100%; /* Prevent excessive stretching */
+  margin-left: 10px; /* Slight offset for better alignment */
+  white-space: normal; /* Allow full text to display */
+  overflow: visible;
+  text-overflow: clip;
+}
+
+form {
+  background: white;
+  padding: 20px;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input, select, button {
+  width: 100%; /* Align elements to full width */
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Switch order: Ski Location before Beginner dropdown */
+form input[name="location"] {
+  order: -1;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: left;
+}
+
+button {
+  background: #ff9800;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: #e68900;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Adds space between input and results */
+}
