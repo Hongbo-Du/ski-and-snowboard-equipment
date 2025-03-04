@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Equipment Recommender</title>
+  <style>
+    .section {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .section h2 {
+      margin-top: 0;
+    }
+  </style>
+  <script>
+    async function submitSkiForm(e) {
+      e.preventDefault();
+      const height = document.getElementById('ski_height').value;
+      const weight = document.getElementById('ski_weight').value;
+      const shoe_size = document.getElementById('ski_shoe_size').value;
+      const skill_level = document.getElementById('ski_skill_level').value;
+      const terrain = document.getElementById('ski_terrain').value;
+      const style = document.getElementById('ski_style').value;
+      const preferred_type = document.getElementById('ski_preferred_type').value;
+      const ageStr = document.getElementById('ski_age').value;
+      const age = ageStr ? parseInt(ageStr, 10) : null;
+      
+      try {
+        const resp = await fetch('/ski', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            height: parseFloat(height),
+            weight: parseFloat(weight),
+            shoe_size,
+            skill_level,
+            terrain,
+            style,
+            preferred_type,
+            age
+          })
+        });
+        const result = await resp.json();
+        document.getElementById('ski_result').innerText = JSON.stringify(result, null, 2);
+      } catch (err) {
+        document.getElementById('ski_result').innerText = "Error: " + err;
+      }
+    }
+    
+    async function submitSnowboardForm(e) {
+      e.preventDefault();
+      const height = document.getElementById('snow_height').value;
+      const weight = document.getElementById('snow_weight').value;
+      const shoe_size = document.getElementById('snow_shoe_size').value;
+      const skill_level = document.getElementById('snow_skill_level').value;
+      const style = document.getElementById('snow_style').value;
+      const preferred_type = document.getElementById('snow_preferred_type').value;
+      const ageStr = document.getElementById('snow_age').value;
+      const age = ageStr ? parseInt(ageStr, 10) : null;
+      
+      try {
+        const resp = await fetch('/snowboard', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            height: parseFloat(height),
+            weight: parseFloat(weight),
+            shoe_size,
+            skill_level,
+            style,
+            preferred_type,
+            age
+          })
+        });
+        const result = await resp.json();
+        document.getElementById('snow_result').innerText = JSON.stringify(result, null, 2);
+      } catch (err) {
+        document.getElementById('snow_result').innerText = "Error: " + err;
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Equipment Recommender</h1>
+  
+  <!-- Ski Section -->
+  <div class="section">
+    <h2>Ski Recommendation</h2>
+    <form onsubmit="submitSkiForm(event)">
+      <label for="ski_height">Height (cm):</label>
+      <input type="number" id="ski_height" required><br><br>
+      
+      <label for="ski_weight">Weight (kg):</label>
+      <input type="number" id="ski_weight" required><br><br>
+      
+      <label for="ski_shoe_size">Shoe Size:</label>
+      <input type="text" id="ski_shoe_size" required><br><br>
+      
+      <label for="ski_skill_level">Skill Level:</label>
+      <select id="ski_skill_level">
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+        <option value="expert">Expert</option>
+      </select><br><br>
+      
+      <label for="ski_terrain">Terrain (optional):</label>
+      <select id="ski_terrain">
+        <option value="all mountain">All Mountain</option>
+        <option value="freestyle">Freestyle</option>
+        <option value="freeride">Freeride</option>
+        <option value="piste">Piste</option>
+      </select><br><br>
+      
+      <label for="ski_style">Style (optional):</label>
+      <select id="ski_style">
+        <option value="chill">Chill</option>
+        <option value="average" selected>Average</option>
+        <option value="aggressive">Aggressive</option>
+      </select><br><br>
+      
+      <label for="ski_preferred_type">Preferred Equipment Type (optional):</label>
+      <input type="text" id="ski_preferred_type"><br><br>
+      
+      <label for="ski_age">Age (optional):</label>
+      <input type="number" id="ski_age"><br><br>
+      
+      <button type="submit">Get Ski Recommendation</button>
+    </form>
+    <pre id="ski_result"></pre>
+  </div>
+  
+  <!-- Snowboard Section -->
+  <div class="section">
+    <h2>Snowboard Recommendation</h2>
+    <form onsubmit="submitSnowboardForm(event)">
+      <label for="snow_height">Height (cm):</label>
+      <input type="number" id="snow_height" required><br><br>
+      
+      <label for="snow_weight">Weight (kg):</label>
+      <input type="number" id="snow_weight" required><br><br>
+      
+      <label for="snow_shoe_size">Shoe Size:</label>
+      <input type="text" id="snow_shoe_size" required><br><br>
+      
+      <label for="snow_skill_level">Skill Level:</label>
+      <select id="snow_skill_level">
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+        <option value="expert">Expert</option>
+      </select><br><br>
+      
+      <label for="snow_style">Style (for offset):</label>
+      <select id="snow_style">
+        <option value="beginner">Beginner (-3 cm)</option>
+        <option value="jibbing/buttering">Jibbing/Buttering (-5 cm)</option>
+        <option value="all-mountain freestyle">All-Mountain Freestyle (-3 cm)</option>
+        <option value="all-mountain freeride">All-Mountain Freeride (+3 cm)</option>
+        <option value="backcountry freeride">Backcountry/Powder Freeride (+5 cm)</option>
+      </select><br><br>
+      
+      <label for="snow_preferred_type">Preferred Equipment Type (optional):</label>
+      <input type="text" id="snow_preferred_type"><br><br>
+      
+      <label for="snow_age">Age (optional):</label>
+      <input type="number" id="snow_age"><br><br>
+      
+      <button type="submit">Get Snowboard Recommendation</button>
+    </form>
+    <pre id="snow_result"></pre>
+  </div>
+  
+</body>
+</html>
